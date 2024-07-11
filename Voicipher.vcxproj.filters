@@ -30,6 +30,9 @@
     <ClCompile Include="AudioSteganographyCode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BigInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RijndaelAlgFst.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AudioSteganographyCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BigInt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
