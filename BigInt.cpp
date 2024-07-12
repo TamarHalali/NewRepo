@@ -3,7 +3,6 @@
 #include <algorithm>  
 #include <cassert>  
 
-CBigInt::~CBigInt() {}
 CBigInt::CBigInt() : values(""), flag(true) {}
 
 CBigInt::CBigInt(const int i) {
