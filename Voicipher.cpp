@@ -151,23 +151,37 @@ int readLineAsInt(const std::string& fileName, int lineIndex) {
     file.close();
     throw std::out_of_range("The line index is out of range.");
 }
-//יצירת מערך של בייטים מקובץ המילון המכיל מיקומים מקובץ הדמה
-std::vector<uint8_t> writeBytesFromTextToArray(const std::vector<uint8_t>& originalAsBytes, const std::vector<uint8_t>& demoAsBytes, std::string file) {
-    std::vector<uint8_t> arrayToWav(originalAsBytes.size());
+////יצירת מערך של בייטים מקובץ המילון המכיל מיקומים מקובץ הדמה
+//std::vector<uint8_t> writeBytesFromTextToArray(const std::vector<uint8_t>& originalAsBytes, const std::vector<uint8_t>& demoAsBytes, std::string file) {
+//    std::vector<uint8_t> arrayToWav(originalAsBytes.size());
+//
+//    for (size_t i = 0; i < originalAsBytes.size(); i++) {
+//        int result = readLineAsInt(file, static_cast<int>(originalAsBytes[i]));
+//        arrayToWav[i] = demoAsBytes[result];
+//    }
+//    return arrayToWav;
+//}
 
-    for (size_t i = 0; i < originalAsBytes.size(); i++) {
-        int result = readLineAsInt(file, static_cast<int>(originalAsBytes[i]));
-        arrayToWav[i] = demoAsBytes[result];
+
+//פונקציה המקבלת את מערך המיקומים ואת קובץ הדמה - ןיוצרת את הקובץ המקורי
+std::vector<uint8_t> writeBytesFromLocationsArrayToBytesArray(const std::vector<int>& locationsArray, const std::vector<uint8_t>& demoAsBytes) {
+    int size = locationsArray.size();
+    std::vector<uint8_t> arrayToWav(size);
+    for (size_t i = 0; i < size; i++) {
+        arrayToWav[i] = demoAsBytes[locationsArray[i]];
     }
     return arrayToWav;
 }
+
+
 //פונקציה היוצרת את מערך המיקומים
 //file=dictionary
 //הסרתי את קובץ הדמה מקבלה כפרמטר - לא צריך אותו
 //  const std::vector<uint8_t>& demoAsBytes,
 std::vector<int> writeBytesLocationsFromDemoArray(const std::vector<uint8_t>& originalAsBytes, std::string file) {
     std::vector<int> arrayToWav(originalAsBytes.size());
-
+    cout << "start write location array:" << endl;
+    cout << "size of location array is:"<< originalAsBytes.size() << endl;
     for (size_t i = 0; i < originalAsBytes.size(); i++) {
         int result = readLineAsInt(file, static_cast<int>(originalAsBytes[i]));
         arrayToWav[i] = result;
@@ -199,7 +213,7 @@ int main() {
     std::string demoFile = "ringtone.wav";
     std::string originalFile = "original.wav";
     std::string dictionaryFilename = "dictionary.txt";
-    std::string keyFile = "key.txt";
+    std::string locationsArrayFile = "locationsArray.txt";
     std::vector<uint8_t> originalAsBytes = readWAV(originalFile);
     std::vector<uint8_t> demoAsBytes = readWAV(demoFile);
     cout << "1 created arrays!" << endl;
@@ -210,18 +224,19 @@ int main() {
     std::vector<int> byteMap = createDictionary(demoAsBytes, dictionaryFilename);
     cout << "2 create bytemap and write bytes to a file" << endl;
     //מערך המיקומים
-    std::vector<int> key = writeBytesLocationsFromDemoArray(originalAsBytes, dictionaryFilename);
-   //הצפנה של AES
+    std::vector<int> locationsArray = writeBytesLocationsFromDemoArray(originalAsBytes, dictionaryFilename);
+   //הצפנה של AES על מערך המיקומים locationsArray
    // Dec();
+    writeIntArrayToFile(locationsArray, locationsArrayFile);
     //הצפנה של מפתח AES עם RSA
 
     //סטגנוגרפיה לתוך קובץ הדמה
 
     //שליחת קובץ הסטג + מפתח ההצפנה של AES המוצפן
 
-    writeIntArrayToFile(key, keyFile);
-    //המערך הבא מכיל את הקובץ המקורי מבוטא ע"י המיקומים בקובץ דמה - הוא בעצם המפתח...
-    std::vector<uint8_t> arrayToWav = writeBytesFromTextToArray(originalAsBytes, demoAsBytes, dictionaryFilename);
+   
+    //המערך הבא מכיל את הקובץ המקורי בבייטים לאחר שחזור ממערך המיקומים
+    std::vector<uint8_t> arrayToWav = writeBytesFromLocationsArrayToBytesArray(locationsArray, demoAsBytes);
 
 
     cout << "4 try to create wav file"<<endl;
