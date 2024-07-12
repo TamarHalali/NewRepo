@@ -474,35 +474,35 @@ void Dec()
     out.close();
 }
 
-void main()
-{
-    clock_t start, finish;
-    double duration1, duration2;
-    int length;
-
-    start = clock();
-    Enc();
-    finish = clock();
-    duration1 = (double)(finish - start);
-
-    ifstream in("length.txt", ios::in);
-    if (!in)
-    {
-        cerr << "file length cannot be opened/n";
-        exit(1);
-    }
-
-    in >> length;
-    in.close();
-    start = clock();
-    Dec();
-    finish = clock();
-    duration2 = (double)(finish - start);
-    cout << "length: " << length << endl;
-    cout << "duration1: " << duration1 << " ms!" << endl;
-    cout << "duration2: " << duration2 << " ms!" << endl;
-    cout << "bla";
-    char c;
-    cin.get(c);
-    return;
-}
+//void main()
+//{
+//    clock_t start, finish;
+//    double duration1, duration2;
+//    int length;
+//
+//    start = clock();
+//    Enc();
+//    finish = clock();
+//    duration1 = (double)(finish - start);
+//
+//    ifstream in("length.txt", ios::in);
+//    if (!in)
+//    {
+//        cerr << "file length cannot be opened/n";
+//        exit(1);
+//    }
+//
+//    in >> length;
+//    in.close();
+//    start = clock();
+//    Dec();
+//    finish = clock();
+//    duration2 = (double)(finish - start);
+//    cout << "length: " << length << endl;
+//    cout << "duration1: " << duration1 << " ms!" << endl;
+//    cout << "duration2: " << duration2 << " ms!" << endl;
+//    cout << "bla";
+//    char c;
+//    cin.get(c);
+//    return;
+//}

@@ -8,10 +8,11 @@ using namespace std;
 class CBigInt {
 public:
     explicit CBigInt();
+    ~CBigInt();
+
     CBigInt(const int i);
     CBigInt(const string& strValues);
     CBigInt(const CBigInt& bigInt);
-
     bool inline isPositive() { return flag; };
     int compareBitInt(const CBigInt& rhs)const;
     CBigInt& operator = (const CBigInt& rhs);
@@ -28,6 +29,7 @@ public:
     const CBigInt absolute()const;
 
 private:
+
     string values;
     bool flag;
 };

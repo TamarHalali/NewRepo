@@ -161,8 +161,11 @@ std::vector<uint8_t> writeBytesFromTextToArray(const std::vector<uint8_t>& origi
     }
     return arrayToWav;
 }
-
-std::vector<int> writeBytesLocationsFromDemoArray(const std::vector<uint8_t>& originalAsBytes, const std::vector<uint8_t>& demoAsBytes, std::string file) {
+//פונקציה היוצרת את מערך המיקומים
+//file=dictionary
+//הסרתי את קובץ הדמה מקבלה כפרמטר - לא צריך אותו
+//  const std::vector<uint8_t>& demoAsBytes,
+std::vector<int> writeBytesLocationsFromDemoArray(const std::vector<uint8_t>& originalAsBytes, std::string file) {
     std::vector<int> arrayToWav(originalAsBytes.size());
 
     for (size_t i = 0; i < originalAsBytes.size(); i++) {
@@ -205,13 +208,13 @@ int main() {
         return 1;
     }
     std::vector<int> byteMap = createDictionary(demoAsBytes, dictionaryFilename);
-    cout << "2 create bytemapppp and write bytes to a file" << endl;
+    cout << "2 create bytemap and write bytes to a file" << endl;
     //מערך המיקומים
-    std::vector<int> key = writeBytesLocationsFromDemoArray(originalAsBytes, demoAsBytes, dictionaryFilename);
+    std::vector<int> key = writeBytesLocationsFromDemoArray(originalAsBytes, dictionaryFilename);
    //הצפנה של AES
-    Dec();
+   // Dec();
     //הצפנה של מפתח AES עם RSA
-   
+
     //סטגנוגרפיה לתוך קובץ הדמה
 
     //שליחת קובץ הסטג + מפתח ההצפנה של AES המוצפן

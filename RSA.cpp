@@ -184,33 +184,33 @@ void DecRSA()
 //	}
 //	return 0;
 //}
-
-int main()
-{
-	cout << "start\n";
-	CBigInt p = newPrime();
-	CBigInt q = newPrime();
-	CBigInt p1 = p - CBigInt(1);
-	CBigInt q1 = q - CBigInt(1);
-	CBigInt fyn = p1 * q1;
-	CBigInt n = p * q;
-	CBigInt e = newPrime_e(fyn);
-	CBigInt d = inverse(fyn, e);
-	cout << " The p is " << p << ".The q is " << q << ".The e is " << e << ".The n is " << n << ".The d is " << d << ".(E is public key.D is primary key.)\n";
-	string m;
-	cout << "enter number: " << endl;
-	cin >> m;
-	CBigInt m_big1(m);
-	CBigInt C = Power(m_big1, e, n);
-	cout << "C " << C << endl;
-	m_big1 = Power(C, d, n);
-	cout << "m_big1" << m_big1 << endl << endl << endl;
-	cout << "bla: " << endl;
-	cin >> m;
-	CBigInt m_big2(m);
-	C = Power(m_big2, d, n);
-	cout << "C: " << C << endl;
-	m_big2 = Power(C, e, n);
-	cout << "m_big2 " << m_big2 << endl << endl << endl;
-	return 0;
-}
+//
+//int main()
+//{
+//	cout << "start\n";
+//	CBigInt p = newPrime();
+//	CBigInt q = newPrime();
+//	CBigInt p1 = p - CBigInt(1);
+//	CBigInt q1 = q - CBigInt(1);
+//	CBigInt fyn = p1 * q1;
+//	CBigInt n = p * q;
+//	CBigInt e = newPrime_e(fyn);
+//	CBigInt d = inverse(fyn, e);
+//	cout << " The p is " << p << ".The q is " << q << ".The e is " << e << ".The n is " << n << ".The d is " << d << ".(E is public key.D is primary key.)\n";
+//	string m;
+//	cout << "enter number: " << endl;
+//	cin >> m;
+//	CBigInt m_big1(m);
+//	CBigInt C = Power(m_big1, e, n);
+//	cout << "C " << C << endl;
+//	m_big1 = Power(C, d, n);
+//	cout << "m_big1" << m_big1 << endl << endl << endl;
+//	cout << "bla: " << endl;
+//	cin >> m;
+//	CBigInt m_big2(m);
+//	C = Power(m_big2, d, n);
+//	cout << "C: " << C << endl;
+//	m_big2 = Power(C, e, n);
+//	cout << "m_big2 " << m_big2 << endl << endl << endl;
+//	return 0;
+//}

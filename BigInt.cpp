@@ -3,6 +3,9 @@
 #include <algorithm>  
 #include <cassert>  
 
+
+CBigInt::~CBigInt() {}
+
 CBigInt::CBigInt() : values(""), flag(true) {}
 
 CBigInt::CBigInt(const int i) {
@@ -25,7 +28,6 @@ CBigInt::CBigInt(const string& strValues) {
 }
 
 CBigInt::CBigInt(const CBigInt& bigInt) : values(bigInt.values), flag(bigInt.flag) {}
-
 
 
 const CBigInt CBigInt::absolute() const {
