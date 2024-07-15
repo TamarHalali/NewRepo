@@ -7,7 +7,7 @@
 CBigInt::~CBigInt() {}
 
 CBigInt::CBigInt() : values(""), flag(true) {}
-
+//ממיר את המספר לסטרינג
 CBigInt::CBigInt(const int i) {
     values.clear();
     flag = i >= 0;

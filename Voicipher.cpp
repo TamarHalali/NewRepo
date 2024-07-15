@@ -255,6 +255,9 @@ void writeIntArrayToFile(const std::vector<int>& intArray, const std::string& fi
 }
 
 int main() {
+    //generate keys
+    // לשמור את הפרטי
+    // את הציבורי לשלוח עם הקובץ
     //int sampleRate = 44100;
     //int numChannels = 2;
     //int bitsPerSample = 16;
@@ -280,7 +283,7 @@ int main() {
     //Dec();
     // 
     EncRSA();
-     DecRSA();
+    // DecRSA();
     //הצפנה של מפתח AES עם RSA
 
     //סטגנוגרפיה לתוך קובץ הדמה
