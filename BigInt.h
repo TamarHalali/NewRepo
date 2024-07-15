@@ -25,6 +25,9 @@ public:
     friend const CBigInt operator % (const CBigInt& lhs, const CBigInt& rhs);
     friend const bool operator < (const CBigInt& lhs, const CBigInt& rhs);
     friend const bool operator == (const CBigInt& lhs, const string& rhs);
+    friend const bool operator<=(const CBigInt& lhs, const CBigInt& rhs);
+    friend const bool operator!=(const CBigInt& lhs, const CBigInt& rhs);
+
     void setValue(const string& strValues);
     const CBigInt absolute()const;
 
@@ -35,3 +38,4 @@ private:
 };
 
 #endif // BIGINT_H
+
