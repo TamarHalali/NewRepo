@@ -1,14 +1,17 @@
 #pragma once
-
+#include <cmath>
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <cstdint>
+#include <sstream>
+#include <string>
+#include <cstring>
 #include "RijndaelAlgFst.h"
-#include<time.h>
-#include<fstream>
-#include<iostream>
 
 using namespace std;
 
-void generateKey(u8 key[16]);
-
+void splitStringToBytes(string key);
+void generateRandomKey(u8* key, int length);
 void Enc();
-
 void Dec();

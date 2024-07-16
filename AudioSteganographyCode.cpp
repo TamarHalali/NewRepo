@@ -12,13 +12,14 @@
 #include <mutex>
 #include "AudioSteganographyCode.h"
 
+
 using namespace std::chrono;
 using namespace std;
 //מהיר בשתי שניות ממה שמתחתיו
 // פונקציה לקריאת קובץ WAV
-std::vector<int16_t> readWAV(const std::string& filename, int& sampleRate, int& numChannels) {
+std::vector<uint8_t> readWAV1(const std::string& filename, int& sampleRate, int& numChannels) {
     std::ifstream file(filename, std::ios::binary);
-    std::vector<int16_t> samples;
+    std::vector<uint8_t> samples;
 
     if (file.is_open()) {
         char buffer[4];
@@ -40,7 +41,7 @@ std::vector<int16_t> readWAV(const std::string& filename, int& sampleRate, int& 
 }
 
 // פונקציה לכתיבת קובץ WAV
-void writeWAV(const std::string& filename, const std::vector<int16_t>& samples, int sampleRate, int numChannels) {
+void writeWAV1(const std::string& filename, const std::vector<uint8_t>& samples, int sampleRate, int numChannels) {
     std::ofstream file(filename, std::ios::binary);
 
     if (file.is_open()) {
@@ -68,7 +69,7 @@ void writeWAV(const std::string& filename, const std::vector<int16_t>& samples, 
 
     file.close();
 }
-void hideMessageInAudio(std::vector<int16_t>& samples, const std::string& message) {
+void hideMessageInAudio(std::vector<uint8_t>& samples, const std::string& message) {
     size_t messageIndex = 0;
     size_t bitIndex = 0;
 
@@ -84,7 +85,7 @@ void hideMessageInAudio(std::vector<int16_t>& samples, const std::string& messag
         }
     }
 }
-std::string extractMessage(const std::vector<int16_t>& samples, size_t messageSize) {
+std::string audioToMessage(const std::vector<uint8_t>& samples, size_t messageSize) {
     std::string message(messageSize, '\0');
     size_t messageIndex = 0;
     size_t bitIndex = 0;
@@ -105,111 +106,52 @@ std::string extractMessage(const std::vector<int16_t>& samples, size_t messageSi
 }
 
 
-std::string readFileIntoString(const std::string& fileName) {
-    std::ifstream fileStream(fileName, std::ios::in | std::ios::binary);
-    if (!fileStream) {
-        throw std::runtime_error("Could not open file: " + fileName);
-    }
-
-    std::ostringstream ss;
-    ss << fileStream.rdbuf();
-    return ss.str();
-}
-
 int main2() {
     std::string inputFilename = R"(C:\Users\USER\Desktop\Project\Project\trySteg2\Titanium_Pavane_PianoCello_Cover.wav)";
     std::string outputFilename = "try555file.wav";
     std::string key = "newLong.txt";
     std::cout << "start key!!" << std::endl;
     auto start = high_resolution_clock::now();
-    std::string message = readFileIntoString(key);
+    std::string message;//= readFileIntoString(key);
     auto end = high_resolution_clock::now();
     std::cout << "finish key!!" << std::endl;
     std::cout << "Reading key took: " << duration_cast<milliseconds>(end - start).count() << " ms" << std::endl;
 
 
     int sampleRate, numChannels;
-    std::vector<int16_t> samples = readWAV(inputFilename, sampleRate, numChannels);
+  //  std::vector<int16_t> samples = readWAV1(inputFilename, sampleRate, numChannels);
 
     //size_t requiredSamples = message.size() * 8;
     //if (requiredSamples > samples.size()) {
     //    std::cerr << "Error: The message is too large to be embedded in the given WAV file." << std::endl;
     //    return 1;
     //}
-    hideMessageInAudio(samples, message);
-    writeWAV(outputFilename, samples, sampleRate, numChannels);
-    std::vector<int16_t> extractedSamples = readWAV(outputFilename, sampleRate, numChannels);
-    std::string extractedMessage = extractMessage(extractedSamples, message.size());
+  /*  hideMessageInAudio(samples, message);
+    writeWAV1(outputFilename, samples, sampleRate, numChannels);
+    std::vector<int16_t> extractedSamples = readWAV1(outputFilename, sampleRate, numChannels);
+    std::string extractedMessage = audioToMessage(extractedSamples, message.size());*/
     //  std::cout << "Extracted message: " << extractedMessage << std::endl;
     return 0;
 }
+//
+// פונקצית עזר שלא בטוח שאני צריכה...
+// std::string readFileIntoString(const std::string& fileName) {
+//std::ifstream fileStream(fileName, std::ios::in | std::ios::binary);
+//if (!fileStream) {
+//    throw std::runtime_error("Could not open file: " + fileName);
+//}
+//
+//std::ostringstream ss;
+//ss << fileStream.rdbuf();
+//return ss.str();
+//}
+// 
 //------------------------------------------------------------------
 // 
 // fit-to book
 //--------------------------------------------------
-//namespace little_endian_io {
-//    template <typename Word>
-//    std::ostream& write_word(std::ostream& outs, Word value, unsigned size = sizeof(Word)) {
-//        for (; size; --size, value >>= 8)
-//            outs.put(static_cast<char>(value & 0xFF));
-//        return outs;
-//    }
-//}
-//
-//struct WAVHeader {
-//    char riffHeader[4];
-//    uint32_t chunkSize;
-//    char waveHeader[4];
-//    char fmtHeader[4];
-//    uint32_t fmtChunkSize;
-//    uint16_t audioFormat;
-//    uint16_t numChannels;
-//    uint32_t sampleRate;
-//    uint32_t byteRate;
-//    uint16_t blockAlign;
-//    uint16_t bitsPerSample;
-//    char dataHeader[4];
-//    uint32_t dataSize;
-//};
-//
-//void writeWAV(const std::string& filename, const std::vector<uint8_t>& audioData, int sampleRate, int numChannels, int bitsPerSample) {
-//    WAVHeader header;
-//
-//    std::memcpy(header.riffHeader, "RIFF", 4);
-//    std::memcpy(header.waveHeader, "WAVE", 4);
-//    std::memcpy(header.fmtHeader, "fmt ", 4);
-//    header.fmtChunkSize = 16;
-//    header.audioFormat = 1;
-//    header.numChannels = numChannels;
-//    header.sampleRate = sampleRate;
-//    header.bitsPerSample = bitsPerSample;
-//    header.byteRate = sampleRate * numChannels * bitsPerSample / 8;
-//    header.blockAlign = numChannels * bitsPerSample / 8;
-//    std::memcpy(header.dataHeader, "data", 4);
-//    header.dataSize = audioData.size() - sizeof(WAVHeader);
-//    header.chunkSize = 4 + (8 + header.fmtChunkSize) + (8 + header.dataSize);
-//
-//    std::ofstream outFile(filename, std::ios::binary);
-//    if (!outFile) {
-//        std::cerr << "Could not open file for writing: " << filename << std::endl;
-//        return;
-//    }
-//    outFile.write(reinterpret_cast<const char*>(&header), sizeof(WAVHeader));
-//    outFile.write(reinterpret_cast<const char*>(audioData.data() + sizeof(WAVHeader)), audioData.size() - sizeof(WAVHeader));
-//    outFile.close();
-//}
-//
-//std::vector<uint8_t> readWAV(const std::string& filename) {
-//    std::ifstream file(filename, std::ios::binary);
-//    if (!file) {
-//        std::cerr << "Could not open file: " << filename << std::endl;
-//        return {};
-//    }
-//    std::vector<uint8_t> buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-//    file.close();
-//    return buffer;
-//}
-//
+// #include "WAVFiles.h"
+
 //void hideMessageInAudio(std::vector<uint8_t>& audioData, const std::string& message) {
 //    size_t messageIndex = 0;
 //    size_t bitIndex = 0;

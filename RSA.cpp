@@ -3,6 +3,7 @@
 #include "BigInt.h"
 #include <stdlib.h> 
 #include <time.h> 
+#include<fstream>
 using namespace std;
 
 #define SIZE 1
@@ -80,21 +81,19 @@ CBigInt newPrime_e(CBigInt fyn)
 	//  cout << endl; 
 	return 0;
 }
-//להחליף את השמות בהתאמה
-//פונקציה המבצעת חישוב חזקה מודולרית ע"י כפל מודולרי חוזר
 
-CBigInt Power(const CBigInt& mc, const CBigInt& n,
-	const CBigInt& p)
+//פונקציה המבצעת חישוב חזקה מודולרית ע"י כפל מודולרי חוזר
+CBigInt Power(const CBigInt& messageORcipher, const CBigInt& eORd,const CBigInt& n)
 {
-	if (n == "0")
+	if (eORd == "0")
 		return 1;
 
-	CBigInt tmp = Power((mc * mc) % p, n / CBigInt(2), p);
+	CBigInt tmp = Power((messageORcipher * messageORcipher) % n, eORd / CBigInt(2), n);
 
-	if (n % CBigInt(2) == "0")
+	if (eORd % CBigInt(2) == "0")
 		;
 	else
-		tmp = (tmp * mc) % p;
+		tmp = (tmp * messageORcipher) % n;
 
 	return tmp;
 }
@@ -138,34 +137,43 @@ void generateKeys(CBigInt& n, CBigInt& e, CBigInt& d)
 	CBigInt q1 = q - CBigInt(1);
 	CBigInt fyn = p1 * q1;
 	n = p * q;
-	e = newPrime_e(fyn);
-	d = inverse(fyn, e);
-	//מה הפרטי ומה הציבורי
-	cout << "The p is " << p << ". The q is " << q << ". The e is " << e << ". The n is " << n << ". The d is " << d << ". (E is public key. D is private key.)\n";
-}
-//שתקבל שם של קובץ
-// פונקציה להצפנה
-void EncRSA()
-{
-	CBigInt n, e, d;
-	generateKeys(n, e, d);
-	string m;
-	cout << "Enter number to encrypt: ";
-	cin >> m;
-	CBigInt m_big(m);
-	CBigInt C = Power(m_big, e, n);
-	cout << "Encrypted: " << C << endl;
+	e = newPrime_e(fyn);//public key - used for encryption
+	d = inverse(fyn, e);//private key - used for decryption
+	ofstream out("privateKey.txt", ios::out);
+	if (!out) {
+		cerr << "file privateKey cannot be opened\n";
+		exit(1);
+	}
+	out << e;
+	ofstream out2("publicKey.txt", ios::out);
+	if (!out) {
+		cerr << "file publicKey cannot be opened\n";
+		exit(1);
+	}
+	out2 << d;
 }
 
-// פונקציה לפענוח
-void DecRSA()
+// פונקציה להצפנה
+//message=AES key
+void EncRSA(string message, CBigInt e, CBigInt n)
 {
-	CBigInt n, e, d;
 	//generateKeys(n, e, d);
-	string c;
-	cout << "Enter number to decrypt: ";
-	cin >> c;
-	CBigInt c_big(c);
+	cout << "Enter number to encrypt: ";
+	cin >> message;
+	CBigInt m_big(message);
+	CBigInt cipher = Power(m_big, e, n);
+	ofstream out("RSACipher.txt", ios::out);
+	if (!out) {
+		cerr << "file RSACipher cannot be opened\n";
+		exit(1);
+	}
+	out << cipher;
+}
+//d=private, e = public
+// פונקציה לפענוח
+void DecRSA(string cipher, CBigInt d, CBigInt n)
+{
+	CBigInt c_big(cipher);
 	//d=private
 	CBigInt m = Power(c_big, d, n);
 	cout << "Decrypted: " << m << endl;

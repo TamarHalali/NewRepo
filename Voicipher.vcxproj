@@ -130,16 +130,24 @@
     <ClCompile Include="..\Project\C-Plus-Plus-Implementation-of-RSA-And-AES-master\C-Plus-Plus-Implementation-of-RSA-And-AES-master\AES\test\rijndael-alg-fst.cpp" />
     <ClCompile Include="AES.cpp" />
     <ClCompile Include="AudioSteganographyCode.cpp" />
+    <ClCompile Include="AuxiliaryFunctions.cpp" />
     <ClCompile Include="BigInt.cpp" />
+    <ClCompile Include="DecryptionProcess.cpp" />
+    <ClCompile Include="EncryptionProcess.cpp" />
     <ClCompile Include="RSA.cpp" />
     <ClCompile Include="Voicipher.cpp" />
+    <ClCompile Include="WAVFiles.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AES.h" />
     <ClInclude Include="AudioSteganographyCode.h" />
+    <ClInclude Include="AuxiliaryFunctions.h" />
     <ClInclude Include="BigInt.h" />
+    <ClInclude Include="DecryptionProcess.h" />
+    <ClInclude Include="EncryptionProcess.h" />
     <ClInclude Include="RijndaelAlgFst.h" />
     <ClInclude Include="RSA.h" />
+    <ClInclude Include="WAVFiles.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

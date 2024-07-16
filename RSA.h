@@ -24,7 +24,7 @@ CBigInt inverse(const CBigInt& fyn, const CBigInt& e);
 void generateKeys(CBigInt& n, CBigInt& e, CBigInt& d);
 
 // פונקציה להצפנה
-void EncRSA();
+void EncRSA(string message, CBigInt e, CBigInt n);
 
 // פונקציה לפענוח
-void DecRSA();
+void DecRSA(string cipher, CBigInt d, CBigInt n);
