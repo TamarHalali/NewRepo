@@ -39,6 +39,7 @@ void writeBytesToDictionaryFile(const std::vector<int>& bytes, const std::string
 	}
 	file.close();
 }
+
 //dictionary of 256 keys for all the bytes with the first location its appear in the demo fule
 std::vector<int> createDictionary(const std::vector<uint8_t>& demoAsBytes, const std::string& dictionaryFileName) {
 	std::vector<int> byteMap(256, -1); // אתחול המערך בגודל 256 עם ערך -1 )
@@ -73,7 +74,6 @@ std::vector<int> readFileLinesAsInts(const std::string& fileName) {
 			throw std::runtime_error("The integer is out of range.");
 		}
 	}
-
 	file.close();
 	return lines;
 }

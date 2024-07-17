@@ -15,4 +15,4 @@ void writeBytesToDictionaryFile(const std::vector<int>& bytes, const std::string
 std::vector<int> createDictionary(const std::vector<uint8_t>& demoAsBytes, const std::string& dictionaryFileName);
 std::vector<int> readFileLinesAsInts(const std::string& fileName);
 std::vector<int> writeBytesLocationsFromDemoArray2(const std::vector<uint8_t>& originalAsBytes, const std::string& file);// יצירת מערך המיקומים 
-std::vector<uint8_t> writeBytesFromLocationsArrayToBytesArray(const std::vector<uint8_t>& locationsArray, const std::vector<uint8_t>& demoAsBytes);
+std::vector<uint8_t> writeBytesFromLocationsArrayToBytesArray(const std::vector<int>& locationsArray, const std::vector<uint8_t>& demoAsBytes);

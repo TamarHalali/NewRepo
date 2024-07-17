@@ -151,6 +151,7 @@ void generateKeys(CBigInt& n, CBigInt& e, CBigInt& d)
 		exit(1);
 	}
 	out2 << d;
+
 }
 
 // פונקציה להצפנה
@@ -168,6 +169,7 @@ void EncRSA(string message, CBigInt e, CBigInt n)
 		exit(1);
 	}
 	out << cipher;
+
 }
 //d=private, e = public
 // פונקציה לפענוח
