@@ -71,7 +71,7 @@ void Enc() {
 	// פונקציה שמכינה את המפתחות העגולים לשימוש בהצפנה על בסיס cipherKey
 	Nr = rijndaelKeySetupEnc(rk, cipherKey, 128);
 
-	ifstream in("message.txt", ios::in | ios::binary);
+	ifstream in("message.txt", ios::in /*| ios::binary*/);
 	if (!in) {
 		cerr << "file message cannot be opened\n";
 		exit(1);
@@ -179,7 +179,7 @@ void Dec() {
 	// פונקציה שמכינה את המפתחות העגולים לשימוש בפענוח על בסיס cipherKey.
 	Nr = rijndaelKeySetupDec(rk, cipherKey, 128);
 
-	ifstream in("cipher.txt", ios::in | ios::binary);
+	ifstream in("cipher.txt", ios::in/* | ios::binary*/);
 	if (!in) {
 		cerr << "file cipher cannot be opened\n";
 		exit(1);
